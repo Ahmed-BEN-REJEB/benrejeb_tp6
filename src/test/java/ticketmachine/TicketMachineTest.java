@@ -81,21 +81,18 @@ class TicketMachineTest {
 		assertEquals(refund, 0, "Operation non aboutie correctement");
 	}
 
-	// @Test
-	// // S9 : On ne peut pas insérer un montant négatif
-	// void verifierMontant(){
-	// 	int valeurNegatif = -1 * PRICE;
-	// 	machine.insertMoney(valeurNegatif);
-	// 	machine.refund(PRICE);
-	// 	int refund = machine.getBalance();
-	// 	assertEquals(refund, 0, "Operation non aboutie correctement");
-	// }
+	@Test
+	// S9 : On ne peut pas insérer un montant négatif
+	void verifierMontant(){
+		int valeurNegatif = -1 * PRICE;
+		assertFalse(machine.insertMoney(valeurNegatif), "Operation ne peut pas aboutir");
+	}
 
-	// @Test
-	// // S10 : on ne peut pas créer de machine qui délivre des tickets dont le prix est négatif
-	// void (){
-	// 	
-	//
-	// 	assertEquals(refund, 0, "Operation non aboutie correctement");
-	// }
+	@Test
+	// S10 : on ne peut pas créer de machine qui délivre des tickets dont le prix est négatif
+	void verifierPrixTicket() {
+		Throwable exception = Assertions.assertThrows(IllegalArgumentException.class, () -> new TicketMachine(-PRICE));
+
+		assertEquals("Ticket price must be positive", exception.getMessage(), "L'exception n'a pas le message attendu");
+	}
 }
